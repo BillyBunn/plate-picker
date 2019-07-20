@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -10,42 +10,34 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
-import { Context } from '../Context';
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     display: 'flex'
-//   },
-//   formControl: {
-//     margin: theme.spacing(3)
-//   }
-// }));
+import { reducer, initialState } from '../Context';
 
 const Form = () => {
-  let { plates } = useContext(Context);
-  // console.log(plates);
-  // const classes = useStyles();
-  // const [state, setState] = React.useState({
-  //   gilad: true,
-  //   jason: false,
-  //   antoine: false
-  // });
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  // const handleChange = name => event => {
-  //   setState({ ...state, [name]: event.target.checked });
-  // };
-  const [value, setValue] = React.useState('');
-  const handleCheckboxChange = () => console.log('checked');
-  
-  const [units, setUnits] = React.useState('metric');
-  function handleRadioChange(event) {
-    console.log(event.target.value)
-    setUnits(event.target.value);
+  const handleCheckboxChange = (e) => {
+    console.log(e.target.value)
+    dispatch({
+      type: 'TOGGLE_PLATE_AVAILABILITY',
+      payload: e.target.value
+    })
   }
 
-  const error =
-    plates[units].filter(({ available }) => available).length <= 0;
+  function handleRadioChange(e) {
+    dispatch({
+      type: 'TOGGLE_UNITS',
+      payload: e.target.value
+    });
+  }
 
+  // const error =
+  //   plates[units].filter(({ available }) => available).length <= 0;
+  const error = true;
+  // const units = 'imperial'
+
+  let units = state.currentUnits;
+  let plates = state.plates[units];
+  // console.log({ units, plates });
   return (
     <FormControl component="fieldset" required error={error}>
       <RadioGroup
@@ -70,13 +62,13 @@ const Form = () => {
       </RadioGroup>
       <FormLabel component="legend">Check all available plates</FormLabel>
       <FormGroup>
-        {plates[units].map(({ weight, available }) => {
+        {plates.map(({ weight, available }) => {
           return (
             <FormControlLabel
               control={
                 <Checkbox
                   checked={available}
-                  onChange={() => handleCheckboxChange()}
+                  onChange={handleCheckboxChange}
                   value={weight}
                 />
               }

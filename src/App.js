@@ -1,14 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Context } from './Context';
+
 import Header from './components/Header';
 import Page from './components/Page';
 import './styles.css';
 
+import { Routes } from './Context';
+
 export default function App() {
-  let { routes } = useContext(Context);
+  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  const routes = useContext(Routes);
 
   return (
     <Router>

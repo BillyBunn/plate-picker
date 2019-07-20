@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useReducer, useContext } from 'react';
 
 import Home from './pages/home';
 import About from './pages/about';
 import Settings from './pages/settings';
 
-export const Context = React.createContext({
-  routes: [
-    { path: '/', name: 'Home', Component: Home },
-    { path: '/about', name: 'About', Component: About },
-    { path: '/settings', name: 'Settings', Component: Settings }
-  ],
-  defaultUnits: 'metric',
+export const Routes = React.createContext([
+  { path: '/', name: 'Home', Component: Home },
+  { path: '/about', name: 'About', Component: About },
+  { path: '/settings', name: 'Settings', Component: Settings }
+]);
+
+export const initialState = {
+  currentUnits: 'imperial',
   plates: {
     imperial: [
       { weight: 0.25, available: false },
@@ -36,4 +37,31 @@ export const Context = React.createContext({
       { weight: 25, available: false }
     ]
   }
-});
+};
+
+export const reducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case 'TOGGLE_UNITS':
+      let currentUnits = payload;
+      return { ...state, currentUnits };
+
+    case 'TOGGLE_PLATE_AVAILABILITY':
+      let weight = parseFloat(payload);
+      console.log(typeof weight)
+      let units = state.currentUnits
+      let updatedPlates = state.plates[units].map(plate => {
+        if (plate.weight === weight) plate.available = !plate.available;
+        return plate;
+      });
+      return {
+        ...state,
+        plates: { ...state.plates, [units]: updatedPlates }
+      };
+
+    default:
+      return state;
+  }
+};
+
+// export const Dispatch = React.createContext(null);
