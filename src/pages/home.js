@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Form from '../components/Form';
 
 function Home() {
   return (
     <>
       <h1>Home</h1>
+      <Form />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet,
         purus vitae eleifend tristique, lorem magna volutpat orci, et vehicula
@@ -11,7 +13,7 @@ function Home() {
         porta turpis, ut iaculis justo.
       </p>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;
