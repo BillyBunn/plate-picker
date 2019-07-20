@@ -10,18 +10,23 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+
+
 import { reducer, initialState } from '../Context';
 
 const Form = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const handleCheckboxChange = (e) => {
-    console.log(e.target.value)
+  const handleCheckboxChange = e => {
+    console.log(e.target.value);
     dispatch({
       type: 'TOGGLE_PLATE_AVAILABILITY',
       payload: e.target.value
-    })
-  }
+    });
+  };
 
   function handleRadioChange(e) {
     dispatch({
@@ -30,14 +35,10 @@ const Form = () => {
     });
   }
 
-  // const error =
-  //   plates[units].filter(({ available }) => available).length <= 0;
-  const error = true;
-  // const units = 'imperial'
-
   let units = state.currentUnits;
   let plates = state.plates[units];
-  // console.log({ units, plates });
+  const error = plates.filter(({ available }) => available).length <= 0;
+
   return (
     <FormControl component="fieldset" required error={error}>
       <RadioGroup
@@ -60,6 +61,8 @@ const Form = () => {
           labelPlacement="end"
         />
       </RadioGroup>
+      <Divider />
+
       <FormLabel component="legend">Check all available plates</FormLabel>
       <FormGroup>
         {plates.map(({ weight, available }) => {
@@ -82,5 +85,31 @@ const Form = () => {
     </FormControl>
   );
 };
+
+/*
+{[0, 1, 2, 3].map(value => {
+        const labelId = `checkbox-list-label-${value}`;
+
+        return (
+          <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={checked.indexOf(value) !== -1}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ 'aria-labelledby': labelId }}
+              />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="Comments">
+                <CommentIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        );
+      })}
+      */
 
 export default Form;

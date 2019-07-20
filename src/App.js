@@ -9,15 +9,15 @@ import './styles.css';
 
 import { Routes } from './Context';
 
+import Drawer from './components/Drawer'
+
 export default function App() {
-  // const [state, dispatch] = useReducer(reducer, initialState);
-
   const routes = useContext(Routes);
-
   return (
     <Router>
       <CssBaseline />
       <Header />
+      <Drawer />
       {routes.map(({ path, Component }) => (
         <Route key={path} exact path={path}>
           {({ match }) => (

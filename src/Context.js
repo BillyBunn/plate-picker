@@ -48,8 +48,7 @@ export const reducer = (state = initialState, action) => {
 
     case 'TOGGLE_PLATE_AVAILABILITY':
       let weight = parseFloat(payload);
-      console.log(typeof weight)
-      let units = state.currentUnits
+      let units = state.currentUnits;
       let updatedPlates = state.plates[units].map(plate => {
         if (plate.weight === weight) plate.available = !plate.available;
         return plate;
@@ -63,5 +62,3 @@ export const reducer = (state = initialState, action) => {
       return state;
   }
 };
-
-// export const Dispatch = React.createContext(null);
