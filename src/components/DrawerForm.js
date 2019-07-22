@@ -50,13 +50,13 @@ const Form = () => {
           >
         <ListItem role={undefined}>
             <FormControlLabel
-              value="imperial"
+              value="lbs"
               control={<Radio color="primary" />}
               label="lbs"
               labelPlacement="end"
             />
             <FormControlLabel
-              value="metric"
+              value="kgs"
               control={<Radio color="primary" />}
               label="kgs"
               labelPlacement="end"

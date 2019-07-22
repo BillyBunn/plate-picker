@@ -9,7 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import Form from './Form';
+import DrawerForm from './DrawerForm';
+import WeightForm from './WeightForm';
 
 const drawerWidth = 240;
 
@@ -70,45 +71,47 @@ function Page(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            Plate Picker
           </Typography>
         </Toolbar>
       </AppBar>
-      <Hidden smUp implementation="css">
-        <Drawer
-          container={container}
-          variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-          ModalProps={{
-            keepMounted: true // Better open performance on mobile.
-          }}
-        >
-          <Form />
-          <div className={classes.toolbar} />
-          <Divider />
-        </Drawer>
-      </Hidden>
-      <Hidden xsDown implementation="css">
-        <Drawer
-          classes={{
-            paper: classes.drawerPaper
-          }}
-          variant="permanent"
-          open
-        >
-          <div className={classes.toolbar} />
-          <Divider />
-          <Form />
-        </Drawer>
-      </Hidden>
+      <nav className={classes.drawer}>
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper
+            }}
+            ModalProps={{
+              keepMounted: true // Better open performance on mobile.
+            }}
+          >
+            <DrawerForm />
+            <div className={classes.toolbar} />
+            <Divider />
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper
+            }}
+            variant="permanent"
+            open
+          >
+            <div className={classes.toolbar} />
+            <Divider />
+            <DrawerForm />
+          </Drawer>
+        </Hidden>
+      </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {props.children}
+        <WeightForm />
       </main>
     </div>
   );
