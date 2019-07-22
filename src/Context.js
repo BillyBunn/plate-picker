@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React from 'react';
 
 import Home from './pages/home';
 import About from './pages/about';
