@@ -12,10 +12,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { reducer, initialState } from '../Context';
+import { Application} from '../App';
 
 const Form = () => {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const {state, dispatch} = React.useContext(Application)
 
   const handleCheckboxChange = weight => {
     dispatch({
@@ -32,6 +32,7 @@ const Form = () => {
   }
 
   let units = state.currentUnits;
+  // console.log({units})
   let plates = state.plates[units];
   const error = plates.filter(({ available }) => available).length <= 0;
 
@@ -41,14 +42,14 @@ const Form = () => {
         <ListItem role={undefined}>
           <FormLabel component="legend">Units of measurement</FormLabel>
         </ListItem>
-          <RadioGroup
-            aria-label="position"
-            name="position"
-            value={units}
-            onChange={handleRadioChange}
-            row
-          >
-        <ListItem role={undefined}>
+        <RadioGroup
+          aria-label="position"
+          name="position"
+          value={units}
+          onChange={handleRadioChange}
+          row
+        >
+          <ListItem role={undefined}>
             <FormControlLabel
               value="lbs"
               control={<Radio color="primary" />}
@@ -61,8 +62,8 @@ const Form = () => {
               label="kgs"
               labelPlacement="end"
             />
-        </ListItem>
-          </RadioGroup>
+          </ListItem>
+        </RadioGroup>
         <Divider />
 
         <ListItem role={undefined}>

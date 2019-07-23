@@ -11,6 +11,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import DrawerForm from './DrawerForm';
 import WeightForm from './WeightForm';
+import WeightTable from './WeightTable'
 
 const drawerWidth = 240;
 
@@ -112,6 +113,7 @@ function Page(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <WeightForm />
+        <WeightTable />
       </main>
     </div>
   );
