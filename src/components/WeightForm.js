@@ -36,19 +36,15 @@ const WeightForm = () => {
     });
   };
 
-  React.useEffect(() => {
-    console.log('weightform units:', state.currentUnits);
-  }, []);
-
   const classes = useStyles();
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        label={`Weight in ${state.currentUnits}`}
+        label={`Total weight in ${state.currentUnits}`}
         id="margin-none"
         className={classes.textField}
         // helperText="Some important text"
-        autoComplete={`Weight in ${state.currentUnits}`}
+        autoComplete={`Total weight in ${state.currentUnits}`}
         type="number"
         onChange={handleWeightChange}
       />

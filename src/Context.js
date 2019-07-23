@@ -32,9 +32,15 @@ export const initialState = {
   },
 
   currentWeights: {
-    plates: [{ weight: 45, qty: 2 }],
-    remainder: 0,
-    totalWeight: 225
+    plates: [
+      { weight: 45, qty: 2 },
+      { weight: 25, qty: 1 },
+      { weight: 5, qty: 1 }
+    ],
+    bar: 45,
+    totalWeight: 285,
+    targetWeight: 285,
+    remainder: 0
   }
 };
 
@@ -42,7 +48,7 @@ export const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case 'TOGGLE_UNITS':
-      console.log({payload})
+      console.log({ payload });
       return { ...state, currentUnits: payload };
 
     case 'TOGGLE_PLATE_AVAILABILITY':
@@ -56,7 +62,7 @@ export const reducer = (state = initialState, action) => {
       };
 
     case 'CALCULATE':
-      console.log(payload);
+      // console.log(payload);
       let availablePlates = state.plates[state.currentUnits].reduce(
         (acc, plate) => {
           if (plate.available) acc.push(plate.weight);
@@ -64,33 +70,46 @@ export const reducer = (state = initialState, action) => {
         },
         []
       );
-      console.log(
-        listPlates(payload, availablePlates, state.currentBar.weight)
+      // console.log(
+      //   calcPlates(payload, availablePlates, state.currentBar.weight)
+      // );
+      const currentWeights = calcPlates(
+        payload,
+        availablePlates,
+        state.currentBar.weight
       );
-      return state;
+      return { ...state, currentWeights };
 
     default:
       return state;
   }
 };
 
-function listPlates(totalWeight, weights, bar = 45) {
+function calcPlates(targetWeight, weights, bar = 45) {
   weights.sort((a, b) => b - a); // plates examined heaviest to lightest
 
-  let target = (totalWeight - bar) / 2; // weight for each side of bar
+  let perSideTarget = (targetWeight - bar) / 2; // weight for each side of bar
 
   let plates = weights.reduce((acc, weight) => {
-    let qty = target / weight;
+    let qty = perSideTarget / weight;
     if (qty >= 1) {
       qty = Math.floor(qty); // remove remainder
       acc.push({ weight, qty }); // add to plates array
-      target -= weight * qty; // reduce target weight
+      perSideTarget -= weight * qty; // reduce target weight
     }
     return acc;
   }, []);
 
-  if (target) console.log(`${target} short on each side`);
+  if (perSideTarget) console.log(`${perSideTarget} short on each side`);
 
-  return { plates, remainder: target * 2, totalWeight };
+  const remainder = perSideTarget * 2;
+
+  return {
+    plates,
+    bar,
+    totalWeight: targetWeight - remainder,
+    targetWeight,
+    remainder
+  };
   // [ {weight: 45, qty: 2}, {{weight: 10, qty: 2}} ]
 }
