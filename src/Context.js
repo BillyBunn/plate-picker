@@ -1,6 +1,6 @@
 export const initialState = {
   currentUnits: 'lbs',
-  currentBar: { weight: 45, units: 'lbs' },
+  currentBar: { lbs: 45, kgs: 20 },
   bars: {
     lbs: [45, 25],
     kgs: [20, 15, 10]
@@ -31,24 +31,13 @@ export const initialState = {
     ]
   },
 
-  currentWeights: {
-    plates: [
-      { weight: 45, qty: 2 },
-      { weight: 25, qty: 1 },
-      { weight: 5, qty: 1 }
-    ],
-    bar: 45,
-    totalWeight: 285,
-    targetWeight: 285,
-    remainder: 0
-  }
+  currentWeight: null
 };
 
 export const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case 'TOGGLE_UNITS':
-      console.log({ payload });
       return { ...state, currentUnits: payload };
 
     case 'TOGGLE_PLATE_AVAILABILITY':
@@ -60,6 +49,10 @@ export const reducer = (state = initialState, action) => {
         ...state,
         plates: { ...state.plates, [state.currentUnits]: updatedPlates }
       };
+
+    case 'SELECT_BAR':
+      let currentBar = { ...state.currentBar, [state.currentUnits]: payload };
+      return { ...state, currentBar };
 
     case 'CALCULATE':
       // console.log(payload);
@@ -73,12 +66,12 @@ export const reducer = (state = initialState, action) => {
       // console.log(
       //   calcPlates(payload, availablePlates, state.currentBar.weight)
       // );
-      const currentWeights = calcPlates(
+      const currentWeight = calcPlates(
         payload,
         availablePlates,
-        state.currentBar.weight
+        state.currentBar[state.currentUnits]
       );
-      return { ...state, currentWeights };
+      return { ...state, currentWeight };
 
     default:
       return state;

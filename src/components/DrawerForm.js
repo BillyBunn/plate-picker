@@ -10,12 +10,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { Application} from '../App';
+import { Application } from '../App';
 
 const Form = () => {
-  const {state, dispatch} = React.useContext(Application)
+  const { state, dispatch } = React.useContext(Application);
 
   const handleCheckboxChange = weight => {
     dispatch({
@@ -31,9 +34,24 @@ const Form = () => {
     });
   }
 
+  function handleSelectChange(e) {
+    dispatch({
+      type: 'SELECT_BAR',
+      payload: e.target.value
+    });
+
+    if (state.currentWeight) {
+      dispatch({
+        type: 'CALCULATE',
+        payload: state.currentWeight.targetWeight
+      });
+    }
+  }
+
   let units = state.currentUnits;
-  // console.log({units})
   let plates = state.plates[units];
+  let currentBar = state.currentBar[units];
+  let bars = state.bars[units];
   const error = plates.filter(({ available }) => available).length <= 0;
 
   return (
@@ -64,6 +82,31 @@ const Form = () => {
             />
           </ListItem>
         </RadioGroup>
+        <Divider />
+
+        <ListItem role={undefined}>
+          <FormLabel component="legend">Barbell weight</FormLabel>
+        </ListItem>
+        <ListItem role={undefined}>
+          <Select
+            value={currentBar}
+            // value="bar"
+            onChange={handleSelectChange}
+            displayEmpty
+            name="bar"
+            // className={classes.select}
+          >
+            {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+            {bars.map(bar => (
+              <MenuItem key={bar + units} value={bar}>
+                {bar} {units}
+              </MenuItem>
+            ))}
+          </Select>
+        </ListItem>
+
         <Divider />
 
         <ListItem role={undefined}>

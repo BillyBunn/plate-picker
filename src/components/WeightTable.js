@@ -5,7 +5,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 import { Application } from '../App';
 
@@ -35,19 +34,13 @@ function createData(weight, qty, sub) {
 const WeightTable = props => {
   const classes = useStyles();
   const { state } = React.useContext(Application);
-  //   currentBar: { weight: 45, units: 'lbs' },
 
-  const bar = createData(
-    `${state.currentBar.weight} ${state.currentBar.units} bar`,
-    ''
-  );
-  const rows = state.currentWeights.plates.map(({ weight, qty }) =>
+  const rows = state.currentWeight.plates.map(({ weight, qty }) =>
     createData(weight, qty, weight * qty)
   );
-  const totalPerSide = state.currentWeights.plates.reduce((total, plate) => {
+  const totalPerSide = state.currentWeight.plates.reduce((total, plate) => {
     return (total += plate.weight * plate.qty);
   }, 0);
-  // const rows = [bar, ...plates];
 
   return (
     <Table className={classes.table}>
@@ -56,9 +49,6 @@ const WeightTable = props => {
           <TableCell>Plate</TableCell>
           <TableCell># Per Side</TableCell>
           <TableCell>Weight ({state.currentUnits})</TableCell>
-          {/* <TableCell rowSpan={rows.length} align="bottom">
-            Total
-          </TableCell> */}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -85,20 +75,19 @@ const WeightTable = props => {
           <TableCell colSpan={3} align="right">
             Bar weight
           </TableCell>
-          {/* <TableCell colSpan={1} /> */}
-          <TableCell>{state.currentBar.weight}</TableCell>
+          <TableCell>{state.currentBar[state.currentUnits]}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell colSpan={3} align="right">
             Total
           </TableCell>
-          <TableCell>{state.currentWeights.totalWeight} {state.currentUnits}</TableCell>
+          <TableCell>{state.currentWeight.totalWeight} {state.currentUnits}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell colSpan={3} align="right">
             Remainder
           </TableCell>
-          <TableCell>{state.currentWeights.remainder}</TableCell>
+          <TableCell>{state.currentWeight.remainder}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

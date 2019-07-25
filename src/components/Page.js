@@ -12,6 +12,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import DrawerForm from './DrawerForm';
 import WeightForm from './WeightForm';
 import WeightTable from './WeightTable'
+import { Application} from '../App';
+
 
 const drawerWidth = 240;
 
@@ -48,6 +50,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Page(props) {
+  const {state} = React.useContext(Application)
+
+
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -113,7 +118,7 @@ function Page(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <WeightForm />
-        <WeightTable />
+        {state.currentWeight && <WeightTable />}
       </main>
     </div>
   );
