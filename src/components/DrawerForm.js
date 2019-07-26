@@ -20,11 +20,17 @@ import { Application } from '../App';
 const Form = () => {
   const { state, dispatch } = React.useContext(Application);
 
+  const recalculate = () => {
+    dispatch({ type: 'CALCULATE', payload: state.currentWeight.targetWeight });
+  };
+
   const handleCheckboxChange = weight => {
     dispatch({
       type: 'TOGGLE_PLATE_AVAILABILITY',
       payload: weight
     });
+
+    if (state.currentWeight) recalculate();
   };
 
   function handleRadioChange(e) {
@@ -32,6 +38,8 @@ const Form = () => {
       type: 'TOGGLE_UNITS',
       payload: e.target.value
     });
+
+    if (state.currentWeight) recalculate();
   }
 
   function handleSelectChange(e) {
@@ -40,12 +48,7 @@ const Form = () => {
       payload: e.target.value
     });
 
-    if (state.currentWeight) {
-      dispatch({
-        type: 'CALCULATE',
-        payload: state.currentWeight.targetWeight
-      });
-    }
+    if (state.currentWeight) recalculate();
   }
 
   let units = state.currentUnits;

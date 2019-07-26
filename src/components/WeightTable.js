@@ -23,14 +23,6 @@ function createData(weight, qty, sub) {
   return { weight, qty, sub };
 }
 
-// const rows = [
-//   createData('45 lb bar', 1),
-//   createData('45', 2),
-//   createData('25', 2),
-//   createData('10', 2),
-//   createData('5', 2)
-// ];
-
 const WeightTable = props => {
   const classes = useStyles();
   const { state } = React.useContext(Application);
