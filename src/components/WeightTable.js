@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
+import { useTheme } from '@material-ui/styles';
 import { Application } from '../App';
 
 const useStyles = makeStyles(theme => ({
@@ -16,6 +16,11 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     maxWidth: 650
+  },
+  totalRow: {
+    background: theme.palette.secondary.main,
+    color: theme.palette.primary.main
+    // color: '#ffffff'
   }
 }));
 
@@ -24,7 +29,8 @@ function createData(weight, qty, sub) {
 }
 
 const WeightTable = props => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
   const { state } = React.useContext(Application);
 
   const rows = state.currentWeight.plates.map(({ weight, qty }) =>
@@ -38,49 +44,61 @@ const WeightTable = props => {
     <Table className={classes.table}>
       <TableHead>
         <TableRow>
-          <TableCell>Plate</TableCell>
-          <TableCell># Per Side</TableCell>
-          <TableCell>Weight ({state.currentUnits})</TableCell>
+          <TableCell align="right">Plate</TableCell>
+          <TableCell align="right"># Per Side</TableCell>
+          <TableCell align="right">Weight ({state.currentUnits})</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {rows.map(row => (
           <TableRow key={row.weight}>
-            <TableCell component="th" scope="row">
+            <TableCell component="th" scope="row" align="right">
               {row.weight}
             </TableCell>
-            <TableCell>{row.qty}</TableCell>
-            <TableCell>{row.sub}</TableCell>
+            <TableCell align="right">{row.qty}</TableCell>
+            <TableCell align="right">{row.sub}</TableCell>
           </TableRow>
         ))}
 
         <TableRow>
           <TableCell colSpan={2} align="right">
-            Subtotal
+            {state.currentUnits} on each side
           </TableCell>
-          <TableCell>
-            {totalPerSide} (&times; 2 sides)
-          </TableCell>
-          <TableCell>{totalPerSide * 2}</TableCell>
+          <TableCell align="right">{totalPerSide}</TableCell>
         </TableRow>
+
         <TableRow>
-          <TableCell colSpan={3} align="right">
+          <TableCell colSpan={2} align="right">
+            &times; 2 sides
+          </TableCell>
+          <TableCell align="right">{totalPerSide * 2}</TableCell>
+        </TableRow>
+
+        <TableRow>
+          <TableCell colSpan={2} align="right">
             Bar weight
           </TableCell>
-          <TableCell>{state.currentBar[state.currentUnits]}</TableCell>
+          <TableCell align="right">
+            {state.currentBar[state.currentUnits]}
+          </TableCell>
         </TableRow>
-        <TableRow>
-          <TableCell colSpan={3} align="right">
+
+        <TableRow className={classes.totalRow}>
+          <TableCell colSpan={2} align="right">
             Total
           </TableCell>
-          <TableCell>{state.currentWeight.totalWeight} {state.currentUnits}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell colSpan={3} align="right">
-            Remainder
+          <TableCell align="right">
+            {state.currentWeight.totalWeight} {state.currentUnits}
           </TableCell>
-          <TableCell>{state.currentWeight.remainder}</TableCell>
         </TableRow>
+        {state.currentWeight.remainder > 0 && (
+          <TableRow>
+            <TableCell colSpan={2} align="right">
+              Remainder
+            </TableCell>
+            <TableCell align="right">{state.currentWeight.remainder}</TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   );

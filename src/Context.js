@@ -1,4 +1,4 @@
-export const initialState = {
+export const defaultState = {
   currentUnits: 'lbs',
   currentBar: { lbs: 45, kgs: 20 },
   bars: {
@@ -34,7 +34,7 @@ export const initialState = {
   currentWeight: null
 };
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (state = defaultState, action) => {
   const { type, payload } = action;
   switch (type) {
     case 'TOGGLE_UNITS':

@@ -43,7 +43,6 @@ const WeightForm = () => {
         label={`Total weight in ${state.currentUnits}`}
         id="margin-none"
         className={classes.textField}
-        // helperText="Some important text"
         autoComplete={`Total weight in ${state.currentUnits}`}
         type="number"
         onChange={handleWeightChange}

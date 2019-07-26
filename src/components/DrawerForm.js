@@ -17,7 +17,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { Application } from '../App';
 
-const Form = () => {
+const DrawerForm = () => {
   const { state, dispatch } = React.useContext(Application);
 
   const recalculate = () => {
@@ -93,15 +93,10 @@ const Form = () => {
         <ListItem role={undefined}>
           <Select
             value={currentBar}
-            // value="bar"
             onChange={handleSelectChange}
             displayEmpty
             name="bar"
-            // className={classes.select}
           >
-            {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem> */}
             {bars.map(bar => (
               <MenuItem key={bar + units} value={bar}>
                 {bar} {units}
@@ -151,4 +146,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default DrawerForm;
