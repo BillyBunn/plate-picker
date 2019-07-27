@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 const WeightForm = () => {
   const { state, dispatch } = React.useContext(Application);
 
-  const defaultValue = state.currentWeight
+  let defaultValue = state.currentWeight
     ? state.currentWeight.targetWeight
     : state.currentBar[state.currentUnits];
 
@@ -60,7 +60,9 @@ const WeightForm = () => {
             label={`Target weight in ${state.currentUnits}`}
             id="weight-input"
             className={classes.textField}
-            defaultValue={defaultValue}
+            defaultValue={
+              state.currentWeight && state.currentWeight.targetWeight
+            }
             type="number"
             onChange={handleWeightChange}
           />
@@ -68,23 +70,27 @@ const WeightForm = () => {
             Enter a weight greater than the barbell
           </FormHelperText>
         </FormControl>
-          <Button
-            variant="contained"
-            size="medium"
-            color="primary"
-            className={classes.button}
-            type="submit"
-          >
-            Calculate
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            className={classes.button}
-            onClick={() => dispatch({ type: 'RESET' })}
-          >
-            Reset
-          </Button>
+        <Button
+          variant="contained"
+          size="medium"
+          color="primary"
+          className={classes.button}
+          type="submit"
+        >
+          Calculate
+        </Button>
+        <Button
+          variant="contained"
+          size="large"
+          className={classes.button}
+          onClick={() => {
+            setWeight(state.currentBar[state.currentUnits]);
+            document.getElementById('weight-input').value = '';
+            dispatch({ type: 'RESET' });
+          }}
+        >
+          Reset
+        </Button>
       </form>
     </Box>
   );

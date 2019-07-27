@@ -70,7 +70,6 @@ export const reducer = (state = defaultState, action) => {
       return { ...state, currentWeight };
 
     case 'RESET':
-      console.log('reset');
       window.localStorage.removeItem('plate-picker');
       return { ...state, currentWeight: null };
 

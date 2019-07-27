@@ -32,7 +32,7 @@ const WeightText = () => {
         </Typography>
       ) : (
         <Typography variant="h5" gutterBottom>
-          Just lift the <em>{bar}</em> {units} bar.
+          Just lift the <strong>{bar}</strong> {units} bar.
         </Typography>
       )}
       {remainder > 0 && (
