@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
@@ -49,9 +50,9 @@ const WeightForm = () => {
   const error = weight < state.currentBar[state.currentUnits];
   const classes = useStyles();
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <FormControl className={classes.container} error={error}>
+    <Box>
+      <form onSubmit={handleSubmit} className={classes.container}>
+        <FormControl error={error}>
           <InputLabel htmlFor="weight-input">
             Target weight in {state.currentUnits}
           </InputLabel>
@@ -59,7 +60,6 @@ const WeightForm = () => {
             label={`Target weight in ${state.currentUnits}`}
             id="weight-input"
             className={classes.textField}
-            // autoComplete={`Total weight in ${state.currentUnits}`}
             defaultValue={defaultValue}
             type="number"
             onChange={handleWeightChange}
@@ -67,26 +67,26 @@ const WeightForm = () => {
           <FormHelperText>
             Enter a weight greater than the barbell
           </FormHelperText>
+        </FormControl>
           <Button
             variant="contained"
-            size="large"
+            size="medium"
             color="primary"
             className={classes.button}
             type="submit"
           >
             Calculate
           </Button>
-        </FormControl>
+          <Button
+            variant="contained"
+            size="large"
+            className={classes.button}
+            onClick={() => dispatch({ type: 'RESET' })}
+          >
+            Reset
+          </Button>
       </form>
-      <Button
-        variant="contained"
-        size="small"
-        className={classes.button}
-        onClick={() => dispatch({ type: 'RESET' })}
-      >
-        Reset
-      </Button>
-    </>
+    </Box>
   );
 };
 

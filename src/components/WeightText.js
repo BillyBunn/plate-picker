@@ -10,25 +10,31 @@ const WeightText = () => {
 
   return (
     <>
-      {plates.length > 0 ? <Typography variant="h5" gutterBottom>
-        Put{' '}
-        {plates.map(({ weight, qty }, idx, arr) => {
-          const last = idx === arr.length - 1;
-          const plural = qty > 1;
-          return (
-            <span key={idx}>
-              {arr.length > 1 && last && 'and '}
-              <strong>{qty}</strong>{' '}
-              <em>
-                {weight}
-                {plural && "'s"}
-              </em>
-              {!last ? ', ' : ` ${units} plates `}
-            </span>
-          );
-        })}{' '}
-        on each side of the <em>{bar}</em> {units} bar.
-      </Typography> : <Typography variant="h5" gutterBottom>Just lift the <em>{bar}</em> {units} bar.</Typography>}
+      {plates.length > 0 ? (
+        <Typography variant="h5" gutterBottom>
+          Put{' '}
+          {plates.map(({ weight, qty }, idx, arr) => {
+            const last = idx === arr.length - 1;
+            const plural = qty > 1;
+            return (
+              <span key={idx}>
+                {arr.length > 1 && last && 'and '}
+                <em>{qty} &times;</em>{' '}
+                <strong>
+                  {weight}
+                  {plural && "'s"}
+                </strong>
+                {!last ? ', ' : ` ${units} plates `}
+              </span>
+            );
+          })}{' '}
+          on each side of the <strong>{bar}</strong> {units} bar.
+        </Typography>
+      ) : (
+        <Typography variant="h5" gutterBottom>
+          Just lift the <em>{bar}</em> {units} bar.
+        </Typography>
+      )}
       {remainder > 0 && (
         <Typography>
           You're short of {targetWeight} by {remainder} {units}. Smaller plates
