@@ -55,7 +55,6 @@ export const reducer = (state = defaultState, action) => {
       return { ...state, currentBar };
 
     case 'CALCULATE':
-      // console.log(payload);
       let availablePlates = state.plates[state.currentUnits].reduce(
         (acc, plate) => {
           if (plate.available) acc.push(plate.weight);
@@ -63,15 +62,17 @@ export const reducer = (state = defaultState, action) => {
         },
         []
       );
-      // console.log(
-      //   calcPlates(payload, availablePlates, state.currentBar.weight)
-      // );
       const currentWeight = calcPlates(
         payload,
         availablePlates,
         state.currentBar[state.currentUnits]
       );
       return { ...state, currentWeight };
+
+    case 'RESET':
+      console.log('reset');
+      window.localStorage.removeItem('plate-picker');
+      return { ...state, currentWeight: null };
 
     default:
       return state;

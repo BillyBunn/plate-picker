@@ -17,10 +17,12 @@ const useStyles = makeStyles(theme => ({
   table: {
     maxWidth: 650
   },
-  totalRow: {
+  total: {
     background: theme.palette.secondary.main,
     color: theme.palette.primary.main
-    // color: '#ffffff'
+  },
+  remainder: {
+    background: theme.palette.error.main
   }
 }));
 
@@ -83,7 +85,7 @@ const WeightTable = props => {
           </TableCell>
         </TableRow>
 
-        <TableRow className={classes.totalRow}>
+        <TableRow className={classes.total}>
           <TableCell colSpan={2} align="right">
             Total
           </TableCell>
@@ -92,11 +94,11 @@ const WeightTable = props => {
           </TableCell>
         </TableRow>
         {state.currentWeight.remainder > 0 && (
-          <TableRow>
+          <TableRow className={classes.remainder}>
             <TableCell colSpan={2} align="right">
               Remainder
             </TableCell>
-            <TableCell align="right">{state.currentWeight.remainder}</TableCell>
+            <TableCell align="right">{state.currentWeight.remainder} {state.currentUnits}</TableCell>
           </TableRow>
         )}
       </TableBody>

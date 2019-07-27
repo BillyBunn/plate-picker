@@ -1,5 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -12,6 +13,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import DrawerForm from './DrawerForm';
 import WeightForm from './WeightForm';
 import WeightTable from './WeightTable'
+import WeightText from './WeightText'
 import { Application} from '../App';
 
 
@@ -115,11 +117,13 @@ function Page(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+      <Container className={classes.content}>
         <div className={classes.toolbar} />
         <WeightForm />
+        {/* <Divider /> */}
+        {state.currentWeight && <WeightText />}
         {state.currentWeight && <WeightTable />}
-      </main>
+      </Container>
     </div>
   );
 }

@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { Application} from '../App';
+import { Application } from '../App';
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    paddingBottom: theme.spacing(3)
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const WeightForm = () => {
-  const {state, dispatch} = React.useContext(Application)
+  const { state, dispatch } = React.useContext(Application);
 
   const [weight, setWeight] = React.useState(0);
   const handleWeightChange = e => {
@@ -38,9 +39,9 @@ const WeightForm = () => {
 
   const classes = useStyles();
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={classes.container}>
       <TextField
-        label={`Total weight in ${state.currentUnits}`}
+        label={`Target weight in ${state.currentUnits}`}
         id="margin-none"
         className={classes.textField}
         autoComplete={`Total weight in ${state.currentUnits}`}
@@ -49,12 +50,20 @@ const WeightForm = () => {
       />
       <Button
         variant="contained"
-        size="small"
+        size="large"
         color="primary"
         className={classes.button}
         type="submit"
       >
         Calculate
+      </Button>
+      <Button
+        variant="contained"
+        size="small"
+        className={classes.button}
+        onClick={() => dispatch({ type: 'RESET' })}
+      >
+        Reset
       </Button>
     </form>
   );
