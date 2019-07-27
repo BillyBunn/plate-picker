@@ -1,6 +1,8 @@
 {
   "name": "plate-picker",
-  "version": "0.1.0",
+  "author": "Billy Bunn <billy@billybunn.com> (https://billybunn.com)",
+  "version": "1.0.0",
+  "description": "A tool to help you pick out the correct barbell plates. Built with React and Material UI.",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.2.1",
