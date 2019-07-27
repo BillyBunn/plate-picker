@@ -7,9 +7,10 @@ const WeightText = () => {
   const currentWeight = state.currentWeight;
   const units = state.currentUnits.slice(0, -1);
   const { plates, bar, targetWeight, remainder } = currentWeight;
+
   return (
     <>
-      <Typography variant="h5" gutterBottom>
+      {plates.length > 0 ? <Typography variant="h5" gutterBottom>
         Put{' '}
         {plates.map(({ weight, qty }, idx, arr) => {
           const last = idx === arr.length - 1;
@@ -27,7 +28,7 @@ const WeightText = () => {
           );
         })}{' '}
         on each side of the <em>{bar}</em> {units} bar.
-      </Typography>
+      </Typography> : <Typography variant="h5" gutterBottom>Just lift the <em>{bar}</em> {units} bar.</Typography>}
       {remainder > 0 && (
         <Typography>
           You're short of {targetWeight} by {remainder} {units}. Smaller plates
