@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/02b0e08a-cf6e-4c8b-a741-a5d996cfe8c9/deploy-status)](https://app.netlify.com/sites/plate-picker/deploys)
+
 # Plate Picker
 
 #### Author: [Billy Bunn](https://github.com/BillyBunn)
@@ -5,6 +7,8 @@
 ### Description
 
 A tool to help you save time at the gym and pick the right plates to put on the bar. Enter your target weight and available plates—Plate Picker does the rest.
+
+See the deployed app at https://plate-picker.netlify.com/
 
 ### Features
 - [x] Imperial and Metric weight units
